@@ -9,7 +9,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: "./bundle.js"
+    filename: "bundle.js"
   },
   module: {
     rules: [
@@ -52,6 +52,6 @@ module.exports = {
       template: "./public/index.html",
       //favicon: "./public/favicon.ico"
     }),
-    new BaseHrefWebpackPlugin({ baseHref: '/' })
+    //new BaseHrefWebpackPlugin({ baseHref: '/' })
   ]
 };
