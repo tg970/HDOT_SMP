@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import axios from 'axios';
+import PivotTableUI from 'react-pivottable/PivotTableUI';
+import 'react-pivottable/pivottable.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -9,22 +12,28 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch("/hello")
-      .then(res => res.json())
-      .then((data) => {
-        console.log('res data:', data);
-        //this.setState({ username: user.username }
-      }));
+    axios({
+      method: 'get',
+      url: 'https://highways.hidot.hawaii.gov/dataset/SMP_Cust_Cols/kc7u-4x7r.json',
+      headers: '',
+    })
+      .then((response) => {
+        console.log(response);
+        this.setState({ data: response.data, loaded: true })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
       <div>
-        {this.state.greeting ? (
-          <h1>{this.state.greeting}</h1>
-        ) : (
-          <h1>Loading.. please wait!</h1>
-        )}
+        <h1>Hello</h1>
+        {(this.state.loaded ? <PivotTableUI
+                data={this.state.data}
+                onChange={s => this.setState(s)}
+            /> : null)}
       </div>
     );
   }
