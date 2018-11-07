@@ -5,20 +5,26 @@ import 'react-pivottable/pivottable.css';
 
 import data from './data.json';
 
+const objCodes = ['5801', '5811', '5821', '5831', '5892', '7107']
+
 const filterData = (data) => {
-  let filterObj = {};
+  let filterObj = { appropriation: {}, object: {} };
   //let cnt = 0;
   for (let i of data) {
     // console.log(i.appropriation);
-    if (filterObj[i.appropriation]) {
-      continue
-    } else {
-      //cnt += 1
-      filterObj[i.appropriation] = true;
+    if (!filterObj.appropriation[i.appropriation]) {
+      filterObj.appropriation[i.appropriation] = true;
+    }
+    if (!filterObj.object[i.object]) {
+      if (!objCodes.includes(i.object)) {
+        filterObj.object[i.object] = true;
+      } //else {
+      //   filterObj.object[i.object] = true;
+      // }
     }
   }
   //console.log(cnt);
-  return { appropriation: filterObj }
+  return filterObj
 }
 
 export default class App extends Component {
@@ -41,7 +47,7 @@ export default class App extends Component {
     //   headers: {
     //     //'Host': 'highways.hidot.hawaii.gov',
     //     'Accept': '*/*',
-    //     // 'Authorization': 'Basic tyler.goodman@us.gt.com:Tyguy123!',
+    //     // 'Authorization': 'Basic ',
     //     'Content-Type': 'application/json',
     //     'X-App-Token': 'Di04VXcc3fJZKgDmE6veI5gCM',
     //   }
