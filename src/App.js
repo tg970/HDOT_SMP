@@ -40,24 +40,24 @@ export default class App extends Component {
     let filterObj = filterData(data)
     console.log(filterObj);
     this.setState({ valueFilter: filterObj, data: data, loaded: true })
-    // this.setState({ data: data, loaded: true })
-    // axios({
-    //   method: 'get',
-    //   url: 'https://highways.hidot.hawaii.gov/resource/wxrr-gdbb.json?$limit=100000',
-    //   headers: {
-    //     //'Host': 'highways.hidot.hawaii.gov',
-    //     'Accept': '*/*',
-    //     // 'Authorization': 'Basic ',
-    //     'Content-Type': 'application/json',
-    //     'X-App-Token': 'Di04VXcc3fJZKgDmE6veI5gCM',
-    //   }
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    this.setState({ data: data, loaded: true })
+    axios({
+      method: 'get',
+      url: 'https://highways.hidot.hawaii.gov/resource/wxrr-gdbb.json?$limit=100000',
+      headers: {
+        //'Host': 'highways.hidot.hawaii.gov',
+        'Accept': '*/*',
+        'Authorization': 'Basic tgoodman970@gmail.com:123Passowrd!',
+        'Content-Type': 'application/json',
+        'X-App-Token': 'Di04VXcc3fJZKgDmE6veI5gCM',
+      }
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
