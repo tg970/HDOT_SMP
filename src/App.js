@@ -64,7 +64,6 @@ export default class App extends Component {
     console.log(this.state);
     return (
       <div>
-        <h4>Select an Appropriation from the drop down below to see expenditure information</h4>
         {(this.state.loaded ? <PivotTableUI
                 data={this.state.data}
                 onChange={(s) => {
