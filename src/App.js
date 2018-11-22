@@ -54,7 +54,7 @@ export default class App extends Component {
     //   headers: {
     //     //'Host': 'highways.hidot.hawaii.gov',
     //     'Accept': '*/*',
-    //     // 'Authorization': 'Basic ',
+    //     'Authorization': 'Basic tgoodman970@gmail.com:123Passowrd!',
     //     'Content-Type': 'application/json',
     //     'X-App-Token': 'Di04VXcc3fJZKgDmE6veI5gCM',
     //   }
