@@ -5,7 +5,14 @@ import 'react-pivottable/pivottable.css';
 
 import data from './data.json';
 
-const objCodes = ['5801', '5811', '5821', '5831', '5892', '7107']
+const objCodes = [
+  '5801 - R&M - Office Furniture and Equipment - Special',
+  '5811 - R&M - Machinery and Equipment - Special',
+  '5821 - R&M Building and Structure - Special',
+  '5831 - R&M - Grounds - Special',
+  '5892 - R&M - Others - Special',
+  '7107 - Personal Services Rendered by Others-Special Maint'
+]
 
 const filterData = (data) => {
   let filterObj = { appropriation: {}, object: {} };
@@ -64,7 +71,6 @@ export default class App extends Component {
     console.log(this.state);
     return (
       <div>
-        <h4>Select an Appropriation from the drop down below to see expenditure information</h4>
         {(this.state.loaded ? <PivotTableUI
                 data={this.state.data}
                 onChange={(s) => {
