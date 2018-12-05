@@ -50,7 +50,7 @@ export default class App extends Component {
     // this.setState({ data: data, loaded: true })
     // axios({
     //   method: 'get',
-    //   url: 'https://highways.hidot.hawaii.gov/resource/wxrr-gdbb.json?$limit=100000',
+    //   url: 'https://highways.hidot.hawaii.gov/resource/f8xw-w7bv.json?$limit=10000',
     //   headers: {
     //     //'Host': 'highways.hidot.hawaii.gov',
     //     'Accept': '*/*',
