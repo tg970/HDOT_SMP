@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import axios from 'axios';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
+import get from 'lodash.get';
+import first from 'lodash.first';
+import compact from 'lodash.compact';
+import omitby from 'lodash.omitby';
+import isnill from 'lodash.isnil';
 
 import data from './data.json';
 
@@ -34,6 +39,28 @@ const filterData = (data) => {
   return filterObj
 }
 
+function csrfToken() {
+  return get(document.querySelector('meta[name="csrf-token"]'), 'content');
+}
+
+// Because consistency is hard.
+function appToken() {
+  const tokens = [
+    get(window, 'serverConfig.appToken'),
+    get(window, 'socrata.siteChrome.appToken'),
+    get(window, 'blist.configuration.appToken')
+  ];
+  return first(compact(tokens));
+}
+
+const defaultHeaders = omitBy({
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-CSRF-Token': csrfToken(),
+  'X-App-Token': appToken()
+}, isNil);
+
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -44,27 +71,21 @@ export default class App extends Component {
 
   componentDidMount() {
     //console.log(data);
-    let filterObj = filterData(data)
-    console.log(filterObj);
-    this.setState({ valueFilter: filterObj, data: data, loaded: true })
-    // this.setState({ data: data, loaded: true })
-    // axios({
-    //   method: 'get',
-    //   url: 'https://highways.hidot.hawaii.gov/resource/f8xw-w7bv.json?$limit=10000',
-    //   headers: {
-    //     //'Host': 'highways.hidot.hawaii.gov',
-    //     'Accept': '*/*',
-    //     'Authorization': 'Basic tgoodman970@gmail.com:123Passowrd!',
-    //     'Content-Type': 'application/json',
-    //     'X-App-Token': 'Di04VXcc3fJZKgDmE6veI5gCM',
-    //   }
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios({
+      method: 'get',
+      url: 'https://highways.hidot.hawaii.gov/resource/f8xw-w7bv.json?$limit=10000',
+      headers: defaultHeaders
+    })
+      .then((response) => {
+        console.log(response);
+        let filterObj = filterData(resource.data)
+        console.log(filterObj);
+        this.setState({ valueFilter: filterObj, data: data, loaded: true })
+        //this.setState({ data: data, loaded: true })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
