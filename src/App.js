@@ -8,8 +8,6 @@ import compact from 'lodash.compact';
 import omitby from 'lodash.omitby';
 import isnil from 'lodash.isnil';
 
-import data from './data.json';
-
 const objCodes = [
   '5801 - R&M - Office Furniture and Equipment - Special',
   '5811 - R&M - Machinery and Equipment - Special',
@@ -39,28 +37,6 @@ const filterData = (data) => {
   return filterObj
 }
 
-function csrfToken() {
-  return get(document.querySelector('meta[name="csrf-token"]'), 'content');
-}
-
-// Because consistency is hard.
-function appToken() {
-  const tokens = [
-    get(window, 'serverConfig.appToken'),
-    get(window, 'socrata.siteChrome.appToken'),
-    get(window, 'blist.configuration.appToken')
-  ];
-  return first(compact(tokens));
-}
-
-const defaultHeaders = omitby({
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'X-CSRF-Token': csrfToken(),
-  'X-App-Token': appToken()
-}, isnil);
-
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -70,19 +46,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log(defaultHeaders);
-    console.log(window);
-    console.log(document);
-    axios({
-      method: 'get',
-      url: 'https://highways.hidot.hawaii.gov/resource/f8xw-w7bv.json?$limit=10000',
-      headers: defaultHeaders
-    })
+    axios.get('https://hdot-api.herokuapp.com/podata')
       .then((response) => {
         console.log(response);
-        let filterObj = filterData(resource.data)
+        let filterObj = filterData(response.data)
         console.log(filterObj);
-        this.setState({ valueFilter: filterObj, data: data, loaded: true })
+        this.setState({ valueFilter: filterObj, data: response.data, loaded: true })
         //this.setState({ data: data, loaded: true })
       })
       .catch((error) => {
