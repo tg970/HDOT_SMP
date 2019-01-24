@@ -6,7 +6,7 @@ import get from 'lodash.get';
 import first from 'lodash.first';
 import compact from 'lodash.compact';
 import omitby from 'lodash.omitby';
-import isnill from 'lodash.isnil';
+import isnil from 'lodash.isnil';
 
 import data from './data.json';
 
@@ -53,12 +53,12 @@ function appToken() {
   return first(compact(tokens));
 }
 
-const defaultHeaders = omitBy({
+const defaultHeaders = omitby({
   'Accept': 'application/json',
   'Content-Type': 'application/json',
   'X-CSRF-Token': csrfToken(),
   'X-App-Token': appToken()
-}, isNil);
+}, isnil);
 
 
 export default class App extends Component {
