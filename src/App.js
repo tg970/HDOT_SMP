@@ -48,9 +48,9 @@ export default class App extends Component {
   componentDidMount() {
     axios.get('https://hdot-api.herokuapp.com/podata')
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         let filterObj = filterData(response.data)
-        console.log(filterObj);
+        //console.log(filterObj);
         this.setState({ valueFilter: filterObj, data: response.data, loaded: true })
         //this.setState({ data: data, loaded: true })
       })
