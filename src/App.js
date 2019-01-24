@@ -70,7 +70,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    //console.log(data);
+    console.log(defaultHeaders);
     axios({
       method: 'get',
       url: 'https://highways.hidot.hawaii.gov/resource/f8xw-w7bv.json?$limit=10000',
